@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Test {
 
     public static void main(String[] args) throws NoSuchMethodException, TugInterpreterInvalidSyntaxException, IllegalAccessException, TugInterpreterInvalidArgumentException, InvocationTargetException, ClassNotFoundException {
-        Interpreter.executeLine("");
+        Interpreter.executeLine("Console.log(Test123)");
     }
 
 

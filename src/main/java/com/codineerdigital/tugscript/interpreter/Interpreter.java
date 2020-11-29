@@ -12,7 +12,7 @@ import java.util.List;
 public class Interpreter {
 
     public static Class getClassByName(String location) throws ClassNotFoundException {
-        return Class.forName(location);
+        return Class.forName("com.codineerdigital.tugscript.classes." + location);
     }
 
     public static void executeMethod(String className, String methodName, Object... parameters) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, TugInterpreterInvalidSyntaxException, TugInterpreterInvalidArgumentException {
@@ -24,7 +24,7 @@ public class Interpreter {
         for (Method method : methodsClass.getMethods()) {
             if (method.getName().equals(methodName)) {
                 if (Arrays.equals(method.getParameterTypes(), classTypes.toArray())) {
-                    method.invoke(null, parameters);
+                    method.invoke(null, parameters); // Todo: Remove null
                     return;
                 }
             }
@@ -39,7 +39,6 @@ public class Interpreter {
         }
         String bracketInput = input.substring(input.indexOf("(")+1,input.indexOf(")"));
         String[] arguments = bracketInput.split(",");
-        input = "com.codineerdigital.tugscript.classes." + input;
         Interpreter.executeMethod(input.replace("." + elements[elements.length - 1], ""), elements[elements.length - 1].replace("(", "").replace(")", "").replace(bracketInput, ""), arguments);
     }
 
