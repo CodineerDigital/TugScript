@@ -1,4 +1,4 @@
 package com.codineerdigital.tugscript.exceptions;
 
-public class TugInterpreterInvalidArgumentException extends Exception {
+public class TugInterpreterInvalidArgumentException extends TugInterpreterException {
 }

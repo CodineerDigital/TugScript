@@ -1,6 +1,6 @@
 package com.codineerdigital.tugscript.exceptions;
 
-public class TugInterpreterInvalidSyntaxException extends Exception {
+public class TugInterpreterInvalidSyntaxException extends TugInterpreterException {
 
 
 
