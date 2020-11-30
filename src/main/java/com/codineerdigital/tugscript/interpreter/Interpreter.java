@@ -57,13 +57,61 @@ public class Interpreter {
         if (matcher.find()) {
             bracketInput = matcher.group(1).substring(1, matcher.group(1).length()-1);
         }
-        String[] arguments = bracketInput.split(",");
-        if (arguments.length == 1) {
-            if (arguments[0].equals("")) {
-                arguments = new String[]{};
+        String[] argumentStrings = bracketInput.split(",");
+        if (argumentStrings.length == 1) {
+            if (argumentStrings[0].equals("")) {
+                argumentStrings = new String[]{};
             }
         }
-        Interpreter.executeMethod(input.replace("." + elements[elements.length - 1], ""), elements[elements.length - 1].replace("(", "").replace(")", "").replace(bracketInput, ""), arguments);
+        List<Object> arguments = new ArrayList<>();
+        for (String argument : argumentStrings) {
+            arguments.add(parseObject(argument));
+        }
+
+        Interpreter.executeMethod(input.replace("." + elements[elements.length - 1], ""), elements[elements.length - 1].replace("(", "").replace(")", "").replace(bracketInput, ""), arguments.toArray());
+    }
+
+    private static Object parseObject(String input) {
+        if (isInteger(input)) {
+            return Integer.parseInt(input);
+        } else if (isDouble(input)) {
+            return Double.parseDouble(input);
+        } else if (isFloat(input)) {
+            return Float.parseFloat(input);
+        } else if (input.startsWith("\"") && input.endsWith("\"")) {
+            return input.substring(1, input.length()-1);
+        }
+        return null;
+    }
+
+    private static boolean isInteger(String string) {
+        List<Character> chars = Arrays.asList(new Character[]{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}.clone());
+        for (int i = 0; i < string.length(); i++) {
+            if (!chars.contains(string.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isDouble(String string) {
+        List<Character> chars = Arrays.asList(new Character[]{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'}.clone());
+        for (int i = 0; i < string.length(); i++) {
+            if (!chars.contains(string.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isFloat(String string) {
+        List<Character> chars = Arrays.asList(new Character[]{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', 'f', 'F'}.clone());
+        for (int i = 0; i < string.length(); i++) {
+            if (!chars.contains(string.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
